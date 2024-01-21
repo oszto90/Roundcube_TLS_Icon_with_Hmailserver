@@ -42,7 +42,7 @@ class tls_icon_with_hmail extends rcube_plugin
 				return $p;
 			}
 			
-			if ( preg_match_all('/\(version=TLSv1.[2-3].*\)/im', $Received, $items, PREG_PATTERN_ORDER) ) {
+			if ( preg_match_all('/\(version=TLSv1.2.*\)/im', $Received, $items, PREG_PATTERN_ORDER) ) {
 				$data = $items[0][0];
 
 				$needle = "(version=";
@@ -53,14 +53,26 @@ class tls_icon_with_hmail extends rcube_plugin
 				$pos = strrpos($data, $needle);
 				$data = substr_replace($data, "", $pos, strlen($needle));
 				
-				$this->icon_img .= '<img class="lock_icon" src="plugins/tls_icon_with_hmail/lock.svg" title="'. htmlentities($data) .'" />';
+				$this->icon_img .= '<img class="lock_icon" src="plugins/tls_icon_with_hmail/lock_tls_12.png" title="'. htmlentities($data) .'" />';
+			} else if ( preg_match_all('/\(version=TLSv1.3.*\)/im', $Received, $items, PREG_PATTERN_ORDER) ) {
+				$data = $items[0][0];
+
+				$needle = "(version=";
+				$pos = strpos($data, $needle);
+				$data = substr_replace($data, "", $pos, strlen($needle));
+
+				$needle = ")";
+				$pos = strrpos($data, $needle);
+				$data = substr_replace($data, "", $pos, strlen($needle));
+				
+				$this->icon_img .= '<img class="lock_icon" src="plugins/tls_icon_with_hmail/lock_tls_13.png" title="'. htmlentities($data) .'" />';
 			} else if(preg_match_all('/\[127.0.0.1\]|\[::1\]/im', $Received, $items, PREG_PATTERN_ORDER)){
-				$this->icon_img .= '<img class="lock_icon" src="plugins/tls_icon_with_hmail/blue_lock.svg" title="' . $this->gettext('internal') . '" />';
+				$this->icon_img .= '<img class="lock_icon" src="plugins/tls_icon_with_hmail/blue_lock.png" title="' . $this->gettext('internal') . '" />';
 			} 
 			else {
 				// TODO: Mails received from localhost but without TLS are currently flagged insecure
 				//$data = $items[0][0];
-				$this->icon_img .= '<img class="lock_icon" src="plugins/tls_icon_with_hmail/unlock.svg" title="' . $this->gettext('unencrypted') . '" />';
+				$this->icon_img .= '<img class="lock_icon" src="plugins/tls_icon_with_hmail/unlock.png" title="' . $this->gettext('unencrypted') . '" />';
 			}
 		}
 
