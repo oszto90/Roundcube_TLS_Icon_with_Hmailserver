@@ -26,6 +26,10 @@ Update 1.0.3
 - Add IPv6 Support
 - Add Dutch Language
 
+Update 1.0.4
+- Design Update
+- Separate TLS version icon
+
 Internal:
 ![image](https://user-images.githubusercontent.com/75365189/162017996-53bc3e67-936e-4528-8fd0-088c36e157f4.png)
 
